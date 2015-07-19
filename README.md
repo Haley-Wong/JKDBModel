@@ -8,15 +8,17 @@ FMDB的封装，极大简化你的数据库操作，对于自己的扩展也非�
 3.一行代码实现数据库的CURD操作。<br>
 4.源码及其简单，易于理解和掌握。<br>
 5.扩展自己的功能也非常得简单，容易。<br>
-6.支持arc和非arc。<br>
+6.支持arc和mrc。<br>
 
 # how 怎么使用JKDBModel
 使用JKDBModel非常的简单，只需要将FMDB和DBModel拖入项目中，然后添加`libsqlite3.dylib`<br>
 然后让你的实体类继承自JKDBModel，你的实体类就具备了操作数据库的功能。
 
 ## CURD操作
-操作都有保存和批量保存两种方式。
-例如保存操作：[user save];批量保存：[User saveObjects:array];
+操作都有保存和批量保存两种方式。<br>
+例如<br>
+保存操作：`[user save]`<br>
+批量保存：`[User saveObjects:array]`
 
 # 数据库操作api
 ```Objective-C
