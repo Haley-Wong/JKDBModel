@@ -14,6 +14,10 @@ FMDB的封装，极大简化你的数据库操作，对于自己的扩展也非�
 使用JKDBModel非常的简单，只需要将FMDB和DBModel拖入项目中，然后添加`libsqlite3.dylib`<br>
 然后让你的实体类继承自JKDBModel，你的实体类就具备了操作数据库的功能。
 
+# demo中有CURD演示操作
+效果图<br>
+![](http://cc.cocimg.com/bbs/attachment/postcate/topic/16/313017_189_ccde14372754000f44c3edbcc68c9.png "CURD示例")
+
 ## CURD操作
 操作都有保存和批量保存两种方式。<br>
 例如<br>
