@@ -76,13 +76,13 @@
  * 这样可以进行分页查询 @" WHERE pk > 5 limit 10"
  */
 + (NSArray *)findByCriteria:(NSString *)criteria;
-
-#pragma mark - must be override method
 /**
  * 创建表
  * 如果已经创建，返回YES
  */
 + (BOOL)createTable;
+
+#pragma mark - must be override method
 /** 如果子类中有一些property不需要创建数据库字段，那么这个方法必须在子类中重写 
  */
 + (NSArray *)transients;

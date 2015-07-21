@@ -55,6 +55,7 @@
         //获取属性类型等参数
         NSString *propertyType = [NSString stringWithCString: property_getAttributes(property) encoding:NSUTF8StringEncoding];
         /*
+         各种符号对应类型，部分类型在新版SDK中有所变化，如long 和long long
          c char         C unsigned char
          i int          I unsigned int
          l long         L unsigned long
@@ -68,6 +69,7 @@
          
          64位下long 和long long 都是Tq
          SQLite 默认支持五种数据类型TEXT、INTEGER、REAL、BLOB、NULL
+         因为在项目中用的类型不多，故只考虑了少数类型
          */
         if ([propertyType hasPrefix:@"T@"]) {
             [proTypes addObject:SQLTEXT];
@@ -110,6 +112,7 @@
     return res;
 }
 
+/** 获取列名 */
 + (NSArray *)getColumns
 {
     JKDBHelper *jkDB = [JKDBHelper shareInstance];
@@ -131,43 +134,88 @@
  */
 + (BOOL)createTable
 {
-    FMDatabase *db = [FMDatabase databaseWithPath:[JKDBHelper dbPath]];
-    if (![db open]) {
-        NSLog(@"数据库打开失败!");
-        return NO;
-    }
-    
-    NSString *tableName = NSStringFromClass(self.class);
-    NSString *columeAndType = [self.class getColumeAndTypeString];
-    NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@(%@);",tableName,columeAndType];
-    if (![db executeUpdate:sql]) {
-        return NO;
-    }
-    
-    NSMutableArray *columns = [NSMutableArray array];
-    FMResultSet *resultSet = [db getTableSchema:tableName];
-    while ([resultSet next]) {
-        NSString *column = [resultSet stringForColumn:@"name"];
-        [columns addObject:column];
-    }
-    NSDictionary *dict = [self.class getAllProperties];
-    NSArray *properties = [dict objectForKey:@"name"];
-    NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"NOT (SELF IN %@)",columns];
-    //过滤数组
-    NSArray *resultArray = [properties filteredArrayUsingPredicate:filterPredicate];
-
-    for (NSString *column in resultArray) {
-        NSUInteger index = [properties indexOfObject:column];
-        NSString *proType = [[dict objectForKey:@"type"] objectAtIndex:index];
-        NSString *fieldSql = [NSString stringWithFormat:@"%@ %@",column,proType];
-        NSString *sql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD COLUMN %@ ",NSStringFromClass(self.class),fieldSql];
+    __block BOOL res = YES;
+    JKDBHelper *jkDB = [JKDBHelper shareInstance];
+    [jkDB.dbQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        NSString *tableName = NSStringFromClass(self.class);
+        NSString *columeAndType = [self.class getColumeAndTypeString];
+        NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@(%@);",tableName,columeAndType];
         if (![db executeUpdate:sql]) {
-            return NO;
+            res = NO;
+            *rollback = YES;
+            return;
+        };
+        
+        NSMutableArray *columns = [NSMutableArray array];
+        FMResultSet *resultSet = [db getTableSchema:tableName];
+        while ([resultSet next]) {
+            NSString *column = [resultSet stringForColumn:@"name"];
+            [columns addObject:column];
         }
-    }
-    [db close];
-    return YES;
+        NSDictionary *dict = [self.class getAllProperties];
+        NSArray *properties = [dict objectForKey:@"name"];
+        NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"NOT (SELF IN %@)",columns];
+        //过滤数组
+        NSArray *resultArray = [properties filteredArrayUsingPredicate:filterPredicate];
+        for (NSString *column in resultArray) {
+            NSUInteger index = [properties indexOfObject:column];
+            NSString *proType = [[dict objectForKey:@"type"] objectAtIndex:index];
+            NSString *fieldSql = [NSString stringWithFormat:@"%@ %@",column,proType];
+            NSString *sql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD COLUMN %@ ",NSStringFromClass(self.class),fieldSql];
+            if (![db executeUpdate:sql]) {
+                res = NO;
+                *rollback = YES;
+                return ;
+            }
+        }
+    }];
+    
+    return res;
 }
+
+/**
+ * 创建表
+ * 如果已经创建，返回YES
+ */
+//+ (BOOL)createTable
+//{
+//    FMDatabase *db = [FMDatabase databaseWithPath:[JKDBHelper dbPath]];
+//    if (![db open]) {
+//        NSLog(@"数据库打开失败!");
+//        return NO;
+//    }
+//    
+//    NSString *tableName = NSStringFromClass(self.class);
+//    NSString *columeAndType = [self.class getColumeAndTypeString];
+//    NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@(%@);",tableName,columeAndType];
+//    if (![db executeUpdate:sql]) {
+//        return NO;
+//    }
+//    
+//    NSMutableArray *columns = [NSMutableArray array];
+//    FMResultSet *resultSet = [db getTableSchema:tableName];
+//    while ([resultSet next]) {
+//        NSString *column = [resultSet stringForColumn:@"name"];
+//        [columns addObject:column];
+//    }
+//    NSDictionary *dict = [self.class getAllProperties];
+//    NSArray *properties = [dict objectForKey:@"name"];
+//    NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"NOT (SELF IN %@)",columns];
+//    //过滤数组
+//    NSArray *resultArray = [properties filteredArrayUsingPredicate:filterPredicate];
+//
+//    for (NSString *column in resultArray) {
+//        NSUInteger index = [properties indexOfObject:column];
+//        NSString *proType = [[dict objectForKey:@"type"] objectAtIndex:index];
+//        NSString *fieldSql = [NSString stringWithFormat:@"%@ %@",column,proType];
+//        NSString *sql = [NSString stringWithFormat:@"ALTER TABLE %@ ADD COLUMN %@ ",NSStringFromClass(self.class),fieldSql];
+//        if (![db executeUpdate:sql]) {
+//            return NO;
+//        }
+//    }
+//    [db close];
+//    return YES;
+//}
 
 - (BOOL)saveOrUpdate
 {
