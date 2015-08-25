@@ -10,6 +10,7 @@
 #import "QueryTableViewController.h"
 #import "User.h"
 #import "Depart.h"
+#import "JKDBHelper.h"
 
 @implementation ViewController
 
@@ -182,6 +183,9 @@
     destVC.type = type;
 }
 
+- (IBAction)changeDire:(id)sender {
+    [[JKDBHelper shareInstance] changeDBWithDirectoryName:@"Joker"];
+}
 
 //#pragma mark - 不使用FMDatabaseQueue，直接使用FMDatabase
 //

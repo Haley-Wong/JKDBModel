@@ -5,8 +5,10 @@
 //  Created by zx_04 on 15/6/24.
 //
 //
+#import <objc/runtime.h>
 
 #import "JKDBHelper.h"
+#import "JKDBModel.h"
 
 @interface JKDBHelper ()
 
@@ -28,11 +30,15 @@ static JKDBHelper *_instance = nil;
     return _instance;
 }
 
-+ (NSString *)dbPath
++ (NSString *)dbPathWithDirectoryName:(NSString *)directoryName
 {
     NSString *docsdir = [NSSearchPathForDirectoriesInDomains( NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSFileManager *filemanage = [NSFileManager defaultManager];
-    docsdir = [docsdir stringByAppendingPathComponent:@"JKBD"];
+    if (directoryName == nil || directoryName.length == 0) {
+        docsdir = [docsdir stringByAppendingPathComponent:@"JKBD"];
+    } else {
+        docsdir = [docsdir stringByAppendingPathComponent:directoryName];
+    }
     BOOL isDir;
     BOOL exit =[filemanage fileExistsAtPath:docsdir isDirectory:&isDir];
     if (!exit || !isDir) {
@@ -42,12 +48,44 @@ static JKDBHelper *_instance = nil;
     return dbpath;
 }
 
++ (NSString *)dbPath
+{
+    return [self dbPathWithDirectoryName:nil];
+}
+
 - (FMDatabaseQueue *)dbQueue
 {
     if (_dbQueue == nil) {
         _dbQueue = [[FMDatabaseQueue alloc] initWithPath:[self.class dbPath]];
     }
     return _dbQueue;
+}
+
+- (BOOL)changeDBWithDirectoryName:(NSString *)directoryName
+{
+    if (_instance.dbQueue) {
+        _instance.dbQueue = nil;
+    }
+    _instance.dbQueue = [[FMDatabaseQueue alloc] initWithPath:[JKDBHelper dbPathWithDirectoryName:directoryName]];
+    
+    int numClasses;
+    Class *classes = NULL;
+    numClasses = objc_getClassList(NULL,0);
+    
+    if (numClasses >0 )
+    {
+        classes = (__unsafe_unretained Class *)malloc(sizeof(Class) * numClasses);
+        numClasses = objc_getClassList(classes, numClasses);
+        for (int i = 0; i < numClasses; i++) {
+            if (class_getSuperclass(classes[i]) == [JKDBModel class]){
+                id class = classes[i];
+                [class performSelector:@selector(createTable) withObject:nil];
+            }
+        }
+        free(classes);
+    }
+    
+    return YES;
 }
 
 + (id)allocWithZone:(struct _NSZone *)zone
