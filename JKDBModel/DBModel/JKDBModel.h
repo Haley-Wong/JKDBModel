@@ -60,6 +60,8 @@
 + (BOOL)deleteObjects:(NSArray *)array;
 /** 通过条件删除数据 */
 + (BOOL)deleteObjectsByCriteria:(NSString *)criteria;
+/** 通过条件删除 (多参数）--2 */
++ (BOOL)deleteObjectsWithFormat:(NSString *)format, ...;
 /** 清空表 */
 + (BOOL)clearTable;
 
@@ -68,6 +70,8 @@
 
 /** 通过主键查询 */
 + (instancetype)findByPK:(int)inPk;
+
++ (instancetype)findFirstWithFormat:(NSString *)format, ...;
 
 /** 查找某条数据 */
 + (instancetype)findFirstByCriteria:(NSString *)criteria;

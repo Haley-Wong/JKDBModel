@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKDBModel/Controllers/QueryTableViewController.m"
-            timestampString = "463377275.689934"
+            timestampString = "463377973.226881"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
             landmarkName = "-loadData"
             landmarkType = "5">
          </BreakpointContent>

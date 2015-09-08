@@ -464,6 +464,17 @@
     return res;
 }
 
+/** 通过条件删除 (多参数）--2 */
++ (BOOL)deleteObjectsWithFormat:(NSString *)format, ...
+{
+    va_list ap;
+    va_start(ap, format);
+    NSString *criteria = [[NSString alloc] initWithFormat:format locale:[NSLocale currentLocale] arguments:ap];
+    va_end(ap);
+    
+    return [self deleteObjectsByCriteria:criteria];
+}
+
 /** 清空表 */
 + (BOOL)clearTable
 {
@@ -505,6 +516,16 @@
     }];
     
     return users;
+}
+
++ (instancetype)findFirstWithFormat:(NSString *)format, ...
+{
+    va_list ap;
+    va_start(ap, format);
+    NSString *criteria = [[NSString alloc] initWithFormat:format locale:[NSLocale currentLocale] arguments:ap];
+    va_end(ap);
+    
+    return [self findFirstByCriteria:criteria];
 }
 
 /** 查找某条数据 */

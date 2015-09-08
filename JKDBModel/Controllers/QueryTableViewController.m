@@ -40,7 +40,8 @@
         {
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 NSLog(@"第一条");
-                User *user = [User findFirstByCriteria:@" WHERE age = 20 "];
+//                User *user = [User findFirstByCriteria:@" WHERE age = 20 "];
+                User *user = [User findFirstWithFormat:@" WHERE %@ = %d ",@"age",10];
                 if (!user)  return;
                 [self.data addObject:user];
                 [self.tableView reloadData];

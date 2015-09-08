@@ -71,7 +71,8 @@
 #pragma mark - 删除数据
 /** 通过条件删除数据 */
 - (IBAction)deleteData:(id)sender {
-    [User deleteObjectsByCriteria:@" WHERE pk < 10"];
+//    [User deleteObjectsByCriteria:@" WHERE pk < 10"];
+    [User deleteObjectsWithFormat:@"Where %@ < %d",@"pk",10];
 }
 
 /** 创建多个线程删除数据 */
