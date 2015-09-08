@@ -4,7 +4,7 @@
 //
 //  Created by zx_04 on 15/6/27.
 //  Copyright (c) 2015年 joker. All rights reserved.
-//
+//  github:https://github.com/Joker-King/JKDBModel
 
 #import "JKDBModel.h"
 #import "JKDBHelper.h"
@@ -522,6 +522,16 @@
 {
     NSString *condition = [NSString stringWithFormat:@"WHERE %@=%d",primaryId,inPk];
     return [self findFirstByCriteria:condition];
+}
+
++ (NSArray *)findWithFormat:(NSString *)format, ...
+{
+    va_list ap;
+    va_start(ap, format);
+    NSString *criteria = [[NSString alloc] initWithFormat:format locale:[NSLocale currentLocale] arguments:ap];
+    va_end(ap);
+    
+    return [self findByCriteria:criteria];
 }
 
 /** 通过条件查找数据 */

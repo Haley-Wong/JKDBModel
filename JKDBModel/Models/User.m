@@ -21,7 +21,7 @@
 
 +(NSArray *)transients
 {
-    return [NSArray arrayWithObjects:@"duty",nil];
+    return [NSArray arrayWithObjects:@"field1",@"field2",nil];
 }
 
 @end

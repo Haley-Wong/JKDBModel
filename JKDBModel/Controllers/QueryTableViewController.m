@@ -51,7 +51,8 @@
         {
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 NSLog(@"小于20岁");
-                [self.data addObjectsFromArray:[User findByCriteria:@" WHERE age < 20 "]];
+//                [self.data addObjectsFromArray:[User findByCriteria:@" WHERE age < 20 "]];
+                [self.data addObjectsFromArray:[User findWithFormat:@" WHERE %@ < %d",@"age",20]];
                 [self.tableView reloadData];
             });
             break;

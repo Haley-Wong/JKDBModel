@@ -4,7 +4,7 @@
 //
 //  Created by zx_04 on 15/6/27.
 //  Copyright (c) 2015年 joker. All rights reserved.
-//
+//  github:https://github.com/Joker-King/JKDBModel
 
 #import <Foundation/Foundation.h>
 
@@ -71,6 +71,8 @@
 
 /** 查找某条数据 */
 + (instancetype)findFirstByCriteria:(NSString *)criteria;
+
++ (NSArray *)findWithFormat:(NSString *)format, ...;
 
 /** 通过条件查找数据 
  * 这样可以进行分页查询 @" WHERE pk > 5 limit 10"
