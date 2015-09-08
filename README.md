@@ -86,7 +86,19 @@ FMDB的封装，极大简化你的数据库操作，对于自己的扩展也非�
 ```
 # 更新
 修改了创建表和字段检测功能方法。<br>
-由于实际项目中，一个账号对应一个文件夹放数据库，经常会有切换账号登录的需求，在initialize创建数据库表，只执行一次，数据库不能保证一定创建，因此添加切换数据库功能，动态创建功能。 2015-08-25
+由于实际项目中，一个账号对应一个文件夹放数据库，经常会有切换账号登录的需求，在initialize创建数据库表，只执行一次，数据库不能保证一定创建，因此添加切换数据库功能，动态创建功能。 2015-08-25<br>
+添加条件查询和删除的新方法：<br>
+```
++ (instancetype)findFirstWithFormat:(NSString *)format, ...;
+
++ (NSArray *)findWithFormat:(NSString *)format, ...;
+
+/** 通过条件删除 (多参数）--2 */
++ (BOOL)deleteObjectsWithFormat:(NSString *)format, ...;
+```
+ 更新于2015-09-08
+
+
 
 # 鸣谢
 动态获取Model的属性部分源自：https://github.com/li6185377/LKDaoBase <br>
