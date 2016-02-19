@@ -46,6 +46,11 @@
  * 有主键，则更新
  */
 - (BOOL)saveOrUpdate;
+/** 保存或更新
+ * 如果根据特定的列数据可以获取记录，则更新，
+ * 没有记录，则保存
+ */
+- (BOOL)saveOrUpdateByColumnName:(NSString*)columnName AndColumnValue:(NSString*)columnValue;
 /** 保存单个数据 */
 - (BOOL)save;
 /** 批量保存数据 */
