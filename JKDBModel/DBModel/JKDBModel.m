@@ -73,7 +73,7 @@
          */
         if ([propertyType hasPrefix:@"T@"]) {
             [proTypes addObject:SQLTEXT];
-        } else if ([propertyType hasPrefix:@"Ti"]||[propertyType hasPrefix:@"TI"]||[propertyType hasPrefix:@"Ts"]||[propertyType hasPrefix:@"TS"]||[propertyType hasPrefix:@"TB"]) {
+        } else if ([propertyType hasPrefix:@"Ti"]||[propertyType hasPrefix:@"TI"]||[propertyType hasPrefix:@"Ts"]||[propertyType hasPrefix:@"TS"]||[propertyType hasPrefix:@"TB"]||[propertyType hasPrefix:@"Tq"]||[propertyType hasPrefix:@"TQ"]) {
             [proTypes addObject:SQLINTEGER];
         } else {
             [proTypes addObject:SQLREAL];

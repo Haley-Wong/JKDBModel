@@ -22,6 +22,7 @@
         user.name = [NSString stringWithFormat:@"麻子%d",i];
         user.sex = @"男";
         user.age = 10+i;
+        user.createTime = 1368082020;
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             [user save];
         });

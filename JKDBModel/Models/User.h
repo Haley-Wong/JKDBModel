@@ -26,6 +26,8 @@
 /** 年龄 */
 @property (nonatomic, assign)  int                          age;
 
+@property (nonatomic, assign)   long long                   createTime;
+
 @property (nonatomic, assign)   int                        height;
 
 @property (nonatomic, assign)   int                        field1;
