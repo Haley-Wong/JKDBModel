@@ -73,6 +73,12 @@
 /** 查询全部数据 */
 + (NSArray *)findAll;
 
+/**
+ *  通过键查询  值的数组
+ *
+ */
++ (NSArray *)findValuesforKey:(NSString *)key;
+
 /** 通过主键查询 */
 + (instancetype)findByPK:(int)inPk;
 

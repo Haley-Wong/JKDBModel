@@ -534,6 +534,46 @@
     return users;
 }
 
+/**
+ *  通过键查询  值的数组
+ *
+ */
++ (NSArray *)findValuesforKey:(NSString *)key{
+    
+    NSLog(@"jkdb---%s",__func__);
+    JKDBHelper *jkDB = [JKDBHelper shareInstance];
+    NSMutableArray *users = [NSMutableArray array];
+    [jkDB.dbQueue inDatabase:^(FMDatabase *db) {
+        NSString *tableName = NSStringFromClass(self.class);
+        NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@",tableName];
+        FMResultSet *resultSet = [db executeQuery:sql];
+        while ([resultSet next]) {
+            JKDBModel *model = [[self.class alloc] init];
+            for (int i=0; i< model.columeNames.count; i++) {
+                NSString *columeNames = [model.columeNames objectAtIndex:i];
+                NSString *columeType = [model.columeTypes objectAtIndex:i];
+                
+                if ([columeNames isEqualToString:key]) {
+                    if ([columeType isEqualToString:SQLTEXT]) {
+                        [users addObject:[resultSet stringForColumn:columeNames]];
+                    } else {
+                        [users addObject:[NSNumber numberWithLongLong:[resultSet longLongIntForColumn:columeNames]]];
+                    }
+                }               
+            }
+            
+            FMDBRelease(model);
+        }
+    }];
+    
+    return users;
+}
+
+
+
+
+
+
 + (instancetype)findFirstWithFormat:(NSString *)format, ...
 {
     va_list ap;
