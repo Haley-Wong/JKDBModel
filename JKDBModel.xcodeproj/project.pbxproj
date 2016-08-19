@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DA45A381D66C0630092E1DE /* ZXCommonTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA45A371D66C0630092E1DE /* ZXCommonTool.m */; };
 		610FA0101B43D36F00CA50C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FA00F1B43D36F00CA50C6 /* main.m */; };
 		610FA0131B43D36F00CA50C6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 610FA0121B43D36F00CA50C6 /* AppDelegate.m */; };
 		610FA01B1B43D36F00CA50C6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 610FA01A1B43D36F00CA50C6 /* Images.xcassets */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0DA45A361D66C0630092E1DE /* ZXCommonTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCommonTool.h; sourceTree = "<group>"; };
+		0DA45A371D66C0630092E1DE /* ZXCommonTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCommonTool.m; sourceTree = "<group>"; };
 		610FA00A1B43D36F00CA50C6 /* JKDBModel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JKDBModel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		610FA00E1B43D36F00CA50C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		610FA00F1B43D36F00CA50C6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -185,6 +188,8 @@
 				610FA0421B43D44300CA50C6 /* JKDBHelper.m */,
 				610FA0431B43D44300CA50C6 /* JKDBModel.h */,
 				610FA0441B43D44300CA50C6 /* JKDBModel.m */,
+				0DA45A361D66C0630092E1DE /* ZXCommonTool.h */,
+				0DA45A371D66C0630092E1DE /* ZXCommonTool.m */,
 			);
 			path = DBModel;
 			sourceTree = "<group>";
@@ -313,6 +318,7 @@
 				610FA03F1B43D43B00CA50C6 /* User.m in Sources */,
 				6157C3A51B5B3A1800592F3F /* QueryTableViewController.m in Sources */,
 				610FA0561B43D44A00CA50C6 /* FMDatabaseQueue.m in Sources */,
+				0DA45A381D66C0630092E1DE /* ZXCommonTool.m in Sources */,
 				610FA0571B43D44A00CA50C6 /* FMResultSet.m in Sources */,
 				610FA0551B43D44A00CA50C6 /* FMDatabasePool.m in Sources */,
 				610FA0381B43D42E00CA50C6 /* ViewController.m in Sources */,
