@@ -19,6 +19,8 @@
 @property (nonatomic, copy)     NSString                    *sex;
 /** 头像地址 */
 @property (nonatomic, copy)     NSString                    *portraitPath;
+/** 图片 */
+@property (strong, nonatomic)   NSData                      *imageData;
 /** 手机号码 */
 @property (nonatomic, copy)     NSString                    *moblie;
 /** 简介 */

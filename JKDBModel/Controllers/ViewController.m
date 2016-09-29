@@ -17,12 +17,15 @@
 #pragma mark - 插入数据
 /** 创建多条子线程 */
 - (IBAction)insertData:(id)sender {
-    for (int i = 0; i < 1; i++) {
+    UIImage *image = [UIImage imageNamed:@"portrait"];
+    NSData *imageData = UIImagePNGRepresentation(image);
+    for (int i = 0; i < 10; i++) {
         User *user = [[User alloc] init];
         user.name = [NSString stringWithFormat:@"麻子%d",i];
         user.sex = @"男";
         user.age = 10+i;
         user.createTime = 1368082020;
+        user.imageData = imageData;
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             [user save];
         });
@@ -104,11 +107,14 @@
 #pragma mark - 修改数据
 /** 创建多个线程更新数据 */
 - (IBAction)updateData1:(id)sender {
+    UIImage *image = [UIImage imageNamed:@"eay"];
+    NSData *imageData = UIImagePNGRepresentation(image);
     for (int i = 0; i < 5; i++) {
         User *user = [[User alloc] init];
         user.name = [NSString stringWithFormat:@"更新%d",i];
         user.age = 120+i;
         user.pk = 5+i;
+        user.imageData = imageData;
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             [user update];
         });

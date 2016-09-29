@@ -101,12 +101,14 @@
     UILabel *nameLabel = (UILabel *)[cell viewWithTag:102];
     UILabel *sexLabel = (UILabel *)[cell viewWithTag:103];
     UILabel *ageLabel = (UILabel *)[cell viewWithTag:104];
+    UIImageView *imageView = (UIImageView *)[cell viewWithTag:105];
     
     User *user = [self.data objectAtIndex:indexPath.row];
     pkLabel.text = [NSString stringWithFormat:@"%d",user.pk];
     nameLabel.text = user.name;
     sexLabel.text = user.sex;
     ageLabel.text = [NSString stringWithFormat:@"%d",user.age];
+    imageView.image = [UIImage imageWithData:user.imageData];
     
     return cell;
 }

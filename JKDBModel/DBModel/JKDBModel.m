@@ -71,8 +71,10 @@
          SQLite 默认支持五种数据类型TEXT、INTEGER、REAL、BLOB、NULL
          因为在项目中用的类型不多，故只考虑了少数类型
          */
-        if ([propertyType hasPrefix:@"T@"]) {
+        if ([propertyType hasPrefix:@"T@\"NSString\""]) {
             [proTypes addObject:SQLTEXT];
+        } else if ([propertyType hasPrefix:@"T@\"NSData\""]) {
+            [proTypes addObject:SQLBLOB];
         } else if ([propertyType hasPrefix:@"Ti"]||[propertyType hasPrefix:@"TI"]||[propertyType hasPrefix:@"Ts"]||[propertyType hasPrefix:@"TS"]||[propertyType hasPrefix:@"TB"]||[propertyType hasPrefix:@"Tq"]||[propertyType hasPrefix:@"TQ"]) {
             [proTypes addObject:SQLINTEGER];
         } else {
@@ -522,6 +524,8 @@
                  NSString *columeType = [model.columeTypes objectAtIndex:i];
                  if ([columeType isEqualToString:SQLTEXT]) {
                      [model setValue:[resultSet stringForColumn:columeName] forKey:columeName];
+                 } else if ([columeType isEqualToString:SQLBLOB]) {
+                     [model setValue:[resultSet dataForColumn:columeName] forKey:columeName];
                  } else {
                      [model setValue:[NSNumber numberWithLongLong:[resultSet longLongIntForColumn:columeName]] forKey:columeName];
                  }
@@ -587,6 +591,8 @@
                 NSString *columeType = [model.columeTypes objectAtIndex:i];
                 if ([columeType isEqualToString:SQLTEXT]) {
                     [model setValue:[resultSet stringForColumn:columeName] forKey:columeName];
+                } else if ([columeType isEqualToString:SQLBLOB]) {
+                    [model setValue:[resultSet dataForColumn:columeName] forKey:columeName];
                 } else {
                     [model setValue:[NSNumber numberWithLongLong:[resultSet longLongIntForColumn:columeName]] forKey:columeName];
                 }
